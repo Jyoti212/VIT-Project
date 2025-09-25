@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FAMILY TRAVEL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        /* --- Body Styling with Background Image --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('images/family11.png');
+            background-size: cover;
+            background-position: center;
+        }
+        /* --- Simple Fade-in Animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        /* --- Styling for the disabled state --- */
+        .section-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .section-enabled {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.3s ease;
+        }
+        /* --- Custom styling for scrollable itinerary panel --- */
+        #itinerary-output {
+            @media (min-width: 1024px) {
+                max-height: calc(100vh - 8rem); /* 100% of viewport height minus top/bottom padding */
+                overflow-y: auto;
+            }
+        }
+        /* Prettier scrollbar for Webkit browsers */
+        #itinerary-output::-webkit-scrollbar { width: 8px; }
+        #itinerary-output::-webkit-scrollbar-track { background: #f1f5f9; }
+        #itinerary-output::-webkit-scrollbar-thumb {
+            background-color: #ffffff; /* slate-400 */
+            border-radius: 10px;
+            border: 2px solid #f1f5f9; /* slate-100 */
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6">
+    <div class="w-full max-w-7xl mx-auto">
+        <header class="text-center mb-10">
+           <h1 class="text-6xl font-bold text-BLACK"> FAMILY TRIP</h1>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- LEFT COLUMN for INPUTS -->
+            <div class="lg:col-span-2 space-y-6">
+                <section id="trip-details-section" class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl">
+                    <h2 class="font-bold text-2xl mb-4 text-BLACK">1. TRIP INFORMATION</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input id="destination" placeholder="End City" class="md:col-span-2 p-3 border rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500" />
+                        <input id="transport" placeholder="Mode of Transportation" class="p-3 border rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500" />
+                        <div>
+                            <label for="days" class="block text-sm font-medium text-black mb-1">Number of Days</label>
+                            <input id="days" type="number" min="1" value="" class="w-full p-3 border rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+                    <div class="mt-8 text-right">
+                        <button id="next-button" class="px-8 py-3 bg-gray-200 text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 transition-colors">Next &rarr;</button>
+                    </div>
+                </section>
+
+                <section id="family-section" class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl ">
+                    <h2 class="font-bold text-2xl mb-4 text-BLACK">2. TRAVELLERS INFORMATION</h2>
+                    <div id="family-list" class="space-y-3 mb-4"></div>
+                    <div class="flex gap-3">
+                         <input type="text" id="memberName" placeholder="Name" class="w-full p-2 border rounded-lg bg-slate-50">
+                         <input type="number" id="memberAge" placeholder="Age" class="w-24 p-2 border rounded-lg bg-slate-50">
+                        <button onclick="addMemberRow()" class="px-4 py-2 bg-slate-200 rounded-lg font-medium hover:bg-slate-300 transition">+</button>
+                    </div>
+                    <div class="mt-8 text-right">
+                        <button id="generate-button" class="px-8 py-3 bg-gray-200 text-black font-semibold rounded-lg shadow-md hover:bg-gray-300 transition-colors">Generate Itinerary &rarr;</button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN for OUTPUT -->
+            <div class="lg:col-span-3">
+                <section id="itinerary-output" class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl min-h-full">
+                    <div id="itinerary-placeholder" class="h-full flex flex-col items-center justify-center text-center text-black">
+                        <svg class="w-16 h-16 mb-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="text-xl font-bold">Your Itinerary will appear here</h3>
+                        <p class="mt-1 max-w-xs">Complete the steps on the left to generate a personalized travel plan.</p>
+                    </div>
+                    <div id="status" class="hidden">
+                         <div class="flex justify-center items-center flex-col text-center h-full">
+                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+                            <p id="status-text" class="text-lg text-slate-600 font-medium">Planning your trip...</p>
+                        </div>
+                    </div>
+                    <div id="itinerary" class="hidden">
+                        <h2 id="itinerary-title" class="font-extrabold text-3xl mb-4 text-center text-slate-800"></h2>
+                        <div id="plan" class="space-y-6"></div>
+                        <div class="mt-8 text-center">
+                             <button onclick="startOver()" class="px-8 py-3 bg-blue-600 text-black font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors">Start Over</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+<script>
+    const GEMINI_API_KEY = "AIzaSyB9NLecinXWOZtHRGXZvyJPhO2xvR9AUqA";
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+
+    const familyListEl = document.getElementById('family-list');
+    const familySectionEl = document.getElementById('family-section');
+    const itineraryPlaceholderEl = document.getElementById('itinerary-placeholder');
+    const statusEl = document.getElementById('status');
+    const statusTextEl = document.getElementById('status-text');
+    const itineraryEl = document.getElementById('itinerary');
+
+    function proceedToFamilySection() {
+        if (document.getElementById('destination').value.trim() === '') {
+            ;
+            return;
+        }
+        familySectionEl.classList.remove('section-disabled');
+        familySectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function startOver() {
+        window.location.reload();
+    }
+
+    function addMemberRow() {
+        const nameInput = document.getElementById('memberName');
+        const ageInput = document.getElementById('memberAge');
+        const name = nameInput.value.trim();
+        const age = ageInput.value.trim();
+
+        if (!name || !age) {
+    ;
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'flex gap-2 items-center bg-slate-50 p-2 rounded-lg border member-row';
+        container.innerHTML = `
+            <span class="flex-1 font-medium text-slate-700">${name}</span>
+            <span class="w-24 text-slate-500">${age} years</span>
+            <button class="px-3 py-1 bg-red-100 text-red-700 rounded-md text-sm font-semibold hover:bg-red-200 transition">×</button>
+        `;
+        container.querySelector('button').onclick = () => container.remove();
+        familyListEl.appendChild(container);
+
+        nameInput.value = '';
+        ageInput.value = '';
+        nameInput.focus();
+    }
+    
+    async function callGeminiAPI(payload) {
+        if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
+             throw new Error("Please add your personal Gemini API key to the script.");
+        }
+        const response = await fetch(GEMINI_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+            console.error("API Error:", await response.text());
+            throw new Error("Could not connect to the planning service. The API key may be invalid or has exceeded its quota.");
+        }
+        const result = await response.json();
+        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) throw new Error("The AI planner returned an empty response.");
+        return text;
+    }
+
+    async function generateItinerary() {
+        const destination = document.getElementById('destination').value.trim();
+        const days = document.getElementById('days').value;
+        const memberRows = document.querySelectorAll('.member-row');
+        
+        if (memberRows.length === 0) {
+            alert('Please add at least one family member.');
+            return;
+        }
+
+        itineraryPlaceholderEl.classList.add('hidden');
+        statusEl.classList.remove('hidden');
+        document.getElementById('itinerary-title').textContent = `Your Trip to ${destination}`;
+
+        const ages = Array.from(memberRows).map(row => parseInt(row.querySelector('span:nth-child(2)').textContent));
+        const ageGroups = new Set();
+        ages.forEach(age => {
+            if (age <= 12) ageGroups.add('Children');
+            else if (age <= 19) ageGroups.add('Teens');
+            else if (age <= 59) ageGroups.add('Adults');
+            else ageGroups.add('Seniors');
+        });
+
+        const ageGroupString = Array.from(ageGroups).join(', ');
+
+        const groundingPrompt = `
+            Act as an expert family travel planner. Create a detailed, day-by-day itinerary for a trip to ${destination} for ${days} day(s).
+            The family group consists of: ${ageGroupString}.
+            Prioritize suggestions that are suitable and enjoyable for these specific age groups.
+            Include a mix of activities from categories like: famous tourist spots, shopping, historical places, cultural places, temples, churches, gardens, waterparks, libraries, cafes, and live events.
+            **Crucial instruction: Do NOT repeat any suggested places across the entire itinerary. Every suggestion must be unique.**
+            Provide three suggestions for each day: Morning, Afternoon, and Evening.
+            Format the output as a simple text list, not JSON.
+        `;
+
+        const schema = {
+            type: "OBJECT",
+            properties: {
+                itinerary: {
+                    type: "ARRAY",
+                    items: {
+                        type: "OBJECT",
+                        properties: {
+                            day: { type: "NUMBER" },
+                            activities: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        time_of_day: { type: "STRING", enum: ["Morning", "Afternoon", "Evening"] },
+                                        place_name: { type: "STRING" },
+                                        description: { type: "STRING", description: "A brief, one-sentence description of the place and why it's suitable." },
+                                        suitable_for: { type: "ARRAY", items: { type: "STRING" } }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        
+        try {
+            statusTextEl.textContent = 'Searching for the best spots...';
+            const groundingPayload = {
+                contents: [{ parts: [{ text: groundingPrompt }] }],
+                tools: [{ "google_search": {} }]
+            };
+            const groundedText = await callGeminiAPI(groundingPayload);
+
+            statusTextEl.textContent = 'Organizing your itinerary...';
+            const structuringPrompt = `From the following text, extract the itinerary into the specified JSON format. Text: "${groundedText}"`;
+            const structuringPayload = {
+                contents: [{ parts: [{ text: structuringPrompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                }
+            };
+            const structuredJson = await callGeminiAPI(structuringPayload);
+            const data = JSON.parse(structuredJson);
+
+            renderItinerary(data.itinerary);
+
+        } catch(error) {
+            statusEl.innerHTML = `<p class="text-red-600 font-semibold">${error.message}</p>`;
+        }
+    }
+
+    function renderItinerary(itineraryData) {
+        const planEl = document.getElementById('plan');
+        planEl.innerHTML = '';
+        const icons = { Morning: '☀️', Afternoon: '🌴', Evening: '🌙' };
+
+        itineraryData.forEach(day => {
+            const dayBox = document.createElement('div');
+            dayBox.className = 'p-4 border rounded-xl bg-white shadow-sm fade-in';
+            let activitiesHtml = '';
+            day.activities.forEach(activity => {
+                activitiesHtml += `
+                    <div class="flex items-start gap-4 py-2">
+                        <div class="text-2xl pt-1">${icons[activity.time_of_day]}</div>
+                        <div class="flex-1">
+                            <div class="font-bold text-slate-800">${activity.place_name}</div>
+                            <p class="text-sm text-slate-600">${activity.description}</p>
+                            <div class="text-xs text-slate-400 mt-1">Suitable for: ${activity.suitable_for.join(', ')}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            dayBox.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-bold text-xl text-blue-700">Day ${day.day}</h3>
+                </div>
+                <div class="space-y-2">${activitiesHtml}</div>
+            `;
+            planEl.appendChild(dayBox);
+        });
+
+        statusEl.classList.add('hidden');
+        itineraryEl.classList.remove('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        addMemberRow('You', 35); // Add a default member to start
+        document.getElementById('next-button').addEventListener('click', proceedToFamilySection);
+        document.getElementById('generate-button').addEventListener('click', generateItinerary);
+    });
+</script>
+</body>
+</html>

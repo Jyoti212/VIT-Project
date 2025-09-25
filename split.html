@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splitwise Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+        }
+
+        /* --- Body Styling with a clean, light background --- */
+        body {
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        
+        /* --- Styling for the disabled state --- */
+        .section-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .section-enabled {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* --- Simple fade-in animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* --- Custom styling for scrollable expense panel --- */
+        #right-column {
+             @media (min-width: 1024px) {
+                max-height: calc(100vh - 6rem); /* Adjust based on padding */
+                overflow-y: auto;
+            }
+        }
+         /* Prettier scrollbar for Webkit browsers */
+        #right-column::-webkit-scrollbar { width: 8px; }
+        #right-column::-webkit-scrollbar-track { background: #f8fafc; /* slate-50 */ }
+        #right-column::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* slate-300 */
+            border-radius: 10px;
+            border: 2px solid #f8fafc; /* slate-50 */
+        }
+         body::before {
+         content: '';
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         z-index: -1;
+         background-image: url('images/wise.jpeg');
+         background-size: cover;
+         background-position: center;
+}
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center mb-14">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-black">SPLITWISE</h1>
+            <p class="text-black">Easily split expenses with your Travelmates</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- LEFT COLUMN: Trip Setup -->
+            <div class="space-y-6">
+                <section id="trip-setup-section" class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">1. Create a Trip</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="tripName" class="block text-sm font-medium text-slate-600 mb-1">Trip Name</label>
+                            <input type="text" id="tripName" placeholder="e.g., Mumbai Trip" class="w-full p-3 border rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Add Members</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="memberName" placeholder="Enter a name" class="w-full p-3 border rounded-lg bg-slate-50 focus:ring-2 focus:ring-blue-500">
+                                <button onclick="addMember()" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">Add</button>
+                            </div>
+                        </div>
+                        <div id="member-list" class="space-y-2 pt-2">
+                            <!-- Members will be listed here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN: Expenses -->
+            <div id="right-column" class="bg-white p-6 rounded-2xl shadow-lg ">
+                <div id="expense-placeholder" class="h-full flex flex-col items-center justify-center text-center text-slate-500">
+                     <svg class="w-16 h-16 mb-4 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.75A.75.75 0 013 4.5h.75m0 0A.75.75 0 014.5 3v.75m0 0v-.75A.75.75 0 014.5 3h.75m0 0A.75.75 0 016 3.75v.75m0 0v-.75A.75.75 0 016 3h.75m0 0A.75.75 0 017.5 3.75v.75m0 0A.75.75 0 017.5 3v.75m0 0A.75.75 0 018.25 3h.75m0 0A.75.75 0 019.75 3.75v.75m0 0A.75.75 0 019.75 3h.75m0 0A.75.75 0 0111.25 3.75v.75m0 0A.75.75 0 0111.25 3h.75m0 0a.75.75 0 01.75.75v.75m0 0A.75.75 0 0112 3v.75m0 0a.75.75 0 01.75-.75h.75m0 0A.75.75 0 0114.25 3v.75m0 0a.75.75 0 01.75-.75h.75m0 0a.75.75 0 01.75.75v.75M15 6h.75a.75.75 0 000-1.5h-.75V4.5A.75.75 0 0015 3h-.75m0 0v.75m0 0a.75.75 0 00.75.75h.75M3 12h18M3 15h18" /></svg>
+                    <h3 class="text-xl font-bold">Add Expenses Here</h3>
+                    <p>First, create your trip and add members on the left.</p>
+                </div>
+                <div id="expense-section" class="hidden">
+                    <h2 id="trip-title" class="text-2xl font-bold text-slate-800 mb-4 text-center"></h2>
+                    <div id="expense-forms-container" class="space-y-6">
+                        <!-- Expense forms will be added here -->
+                    </div>
+                    <div class="mt-6 space-y-4">
+                        <button onclick="addExpenseForm()" class="w-full py-3 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition">
+                            + Add Another Expense
+                        </button>
+                        <button id="settle-up-btn" onclick="calculateAndShowSettlement()" class="hidden w-full py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition">
+                            Settle Up & See Balances
+                        </button>
+                    </div>
+                    <div id="settlement-summary" class="mt-6 hidden"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+    const tripDetails = {
+        name: '',
+        members: [],
+        expenses: []
+    };
+
+    const memberNameInput = document.getElementById('memberName');
+    const memberListContainer = document.getElementById('member-list');
+    const rightColumn = document.getElementById('right-column');
+    const expensePlaceholder = document.getElementById('expense-placeholder');
+    const expenseSection = document.getElementById('expense-section');
+    const expenseFormsContainer = document.getElementById('expense-forms-container');
+
+    function addMember() {
+        const name = memberNameInput.value.trim();
+        if (name && !tripDetails.members.includes(name)) {
+            tripDetails.members.push(name);
+            renderMembers();
+            memberNameInput.value = '';
+        } else if (tripDetails.members.includes(name)) {
+            alert('This member has already been added.');
+        }
+        memberNameInput.focus();
+    }
+
+    function removeMember(nameToRemove) {
+        tripDetails.members = tripDetails.members.filter(name => name !== nameToRemove);
+        renderMembers();
+    }
+    
+    function renderMembers() {
+        memberListContainer.innerHTML = '';
+        if (tripDetails.members.length === 0) {
+            memberListContainer.innerHTML = '<p class="text-sm text-slate-400 text-center">No members added yet.</p>';
+        } else {
+            tripDetails.members.forEach(name => {
+                const memberEl = document.createElement('div');
+                memberEl.className = 'flex justify-between items-center bg-slate-100 p-2 rounded-lg';
+                memberEl.innerHTML = `
+                    <span class="font-medium text-slate-700">${name}</span>
+                    <button onclick="removeMember('${name}')" class="text-red-500 hover:text-red-700 font-semibold px-2">&times;</button>
+                `;
+                memberListContainer.appendChild(memberEl);
+            });
+        }
+
+        if (tripDetails.members.length > 0 && !document.getElementById('create-trip-btn')) {
+             const createTripBtn = document.createElement('button');
+             createTripBtn.id = 'create-trip-btn';
+             createTripBtn.className = 'w-full mt-4 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition';
+             createTripBtn.textContent = 'Create Trip & Add Expenses';
+             createTripBtn.onclick = createTrip;
+             memberListContainer.appendChild(createTripBtn);
+        } else if (tripDetails.members.length === 0) {
+            const btn = document.getElementById('create-trip-btn');
+            if (btn) btn.remove();
+        }
+    }
+
+    function createTrip() {
+        const tripNameInput = document.getElementById('tripName');
+        tripDetails.name = tripNameInput.value.trim();
+        if (!tripDetails.name) {
+            alert('Please enter a trip name.');
+            return;
+        }
+        document.getElementById('trip-setup-section').classList.add('section-disabled');
+        rightColumn.classList.remove('section-disabled');
+        expensePlaceholder.classList.add('hidden');
+        expenseSection.classList.remove('hidden');
+        document.getElementById('trip-title').textContent = tripDetails.name;
+        addExpenseForm();
+    }
+
+    let expenseCounter = 0;
+    function addExpenseForm() {
+        expenseCounter++;
+        const formId = `expense-form-${expenseCounter}`;
+
+        const formEl = document.createElement('div');
+        formEl.id = formId;
+        formEl.className = 'p-4 border rounded-xl bg-slate-50 fade-in';
+        formEl.innerHTML = `
+            <div class="space-y-4">
+                <div>
+                    <label for="expenseName-${formId}" class="block text-sm font-medium text-slate-600 mb-1">Expense Name</label>
+                    <input type="text" id="expenseName-${formId}" placeholder="e.g., Lunch at Prithvi Cafe" class="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="whoPaid-${formId}" class="block text-sm font-medium text-slate-600 mb-1">Who paid?</label>
+                        <select id="whoPaid-${formId}" class="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
+                            ${tripDetails.members.map(name => `<option>${name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                         <label for="amount-${formId}" class="block text-sm font-medium text-slate-600 mb-1">Amount</label>
+                         <input type="number" id="amount-${formId}" placeholder="0.00" class="w-full p-3 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-2">Split between</label>
+                    <div id="split-between-container-${formId}" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        ${tripDetails.members.map(name => `<label class="flex items-center gap-2 p-2 bg-white rounded-md border"><input type="checkbox" name="splitBetween-${formId}" value="${name}" class="h-4 w-4" checked> ${name}</label>`).join('')}
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-2">Mode of Payment</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2"><input type="radio" name="paymentMode-${formId}" value="Cash" class="h-4 w-4"> Cash</label>
+                        <label class="flex items-center gap-2"><input type="radio" name="paymentMode-${formId}" value="Card" class="h-4 w-4"> Card</label>
+                        <label class="flex items-center gap-2"><input type="radio" name="paymentMode-${formId}" value="UPI" class="h-4 w-4"> UPI</label>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button onclick="saveExpense('${formId}')" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">Save</button>
+                </div>
+                <div id="saved-info-${formId}" class="hidden text-sm text-green-700 font-medium p-3 bg-green-50 rounded-lg"></div>
+            </div>
+        `;
+        expenseFormsContainer.appendChild(formEl);
+    }
+    
+    function saveExpense(formId) {
+        const formEl = document.getElementById(formId);
+        const expenseName = formEl.querySelector(`#expenseName-${formId}`).value;
+        const whoPaid = formEl.querySelector(`#whoPaid-${formId}`).value;
+        const amount = parseFloat(formEl.querySelector(`#amount-${formId}`).value);
+        const paymentModeEl = formEl.querySelector(`input[name="paymentMode-${formId}"]:checked`);
+        const splitBetweenNodes = formEl.querySelectorAll(`input[name="splitBetween-${formId}"]:checked`);
+
+        if (!expenseName || isNaN(amount) || amount <= 0 || !paymentModeEl || splitBetweenNodes.length === 0) {
+            alert('Please fill out all fields, including who to split with.');
+            return;
+        }
+
+        const paymentMode = paymentModeEl.value;
+        const splitBetween = Array.from(splitBetweenNodes).map(node => node.value);
+
+        tripDetails.expenses.push({ id: formId, name: expenseName, paidBy: whoPaid, amount, paymentMode, splitBetween });
+        
+        const savedInfoEl = formEl.querySelector(`#saved-info-${formId}`);
+        savedInfoEl.innerHTML = `Saved: ${expenseName} - ₹${amount.toFixed(2)} paid by ${whoPaid}, split between ${splitBetween.length} people.`;
+        savedInfoEl.classList.remove('hidden');
+
+        formEl.querySelectorAll('input, select, button').forEach(el => { el.disabled = true; });
+        formEl.querySelector(`button[onclick="saveExpense('${formId}')"]`).textContent = "Saved";
+        
+        document.getElementById('settle-up-btn').classList.remove('hidden');
+        document.getElementById('settlement-summary').classList.add('hidden'); // Hide old summary if a new expense is added
+    }
+
+    function calculateAndShowSettlement() {
+        const balances = new Map();
+        tripDetails.members.forEach(member => balances.set(member, 0));
+
+        let totalSpent = 0;
+        tripDetails.expenses.forEach(expense => {
+            totalSpent += expense.amount;
+            const share = expense.amount / expense.splitBetween.length;
+            
+            // The person who paid gets credit
+            balances.set(expense.paidBy, balances.get(expense.paidBy) + expense.amount);
+
+            // The people who shared the expense get debit
+            expense.splitBetween.forEach(member => {
+                balances.set(member, balances.get(member) - share);
+            });
+        });
+
+        const debtors = [];
+        const creditors = [];
+
+        balances.forEach((amount, person) => {
+            if (amount < 0) debtors.push({ person, amount: Math.abs(amount) });
+            if (amount > 0) creditors.push({ person, amount });
+        });
+
+        const transactions = [];
+        while (debtors.length > 0 && creditors.length > 0) {
+            const debtor = debtors[0];
+            const creditor = creditors[0];
+            const amount = Math.min(debtor.amount, creditor.amount);
+
+            transactions.push(`${debtor.person} pays ${creditor.person} ₹${amount.toFixed(2)}`);
+
+            debtor.amount -= amount;
+            creditor.amount -= amount;
+
+            if (debtor.amount < 0.01) debtors.shift();
+            if (creditor.amount < 0.01) creditors.shift();
+        }
+
+        renderSettlement(balances, transactions, totalSpent);
+    }
+
+    function renderSettlement(balances, transactions, totalSpent) {
+        const summaryEl = document.getElementById('settlement-summary');
+        summaryEl.innerHTML = '';
+        summaryEl.classList.remove('hidden');
+        summaryEl.classList.add('fade-in');
+
+        let balanceHtml = `<h3 class="text-xl font-bold text-slate-800 mb-2">Trip Summary</h3>
+                           <div class="p-4 bg-slate-50 rounded-lg mb-4">
+                                <p class="text-lg font-semibold">Total Trip Cost: <span class="text-blue-600">₹${totalSpent.toFixed(2)}</span></p>
+                           </div>
+                           <h4 class="text-lg font-semibold text-slate-700 mb-2">Final Balances</h4>
+                           <ul class="space-y-1 mb-4">`;
+        balances.forEach((amount, person) => {
+            const color = amount < 0 ? 'text-red-600' : 'text-green-600';
+            const sign = amount >= 0 ? '+' : '';
+            balanceHtml += `<li class="flex justify-between p-2 bg-slate-100 rounded-md"><span>${person}</span> <span class="font-mono ${color}">${sign}₹${amount.toFixed(2)}</span></li>`;
+        });
+        balanceHtml += '</ul>';
+
+        let transactionHtml = `<h4 class="text-lg font-semibold text-slate-700 mb-2">Who Owes Whom</h4>`;
+        if (transactions.length > 0) {
+            transactionHtml += `<ul class="space-y-2">`;
+            transactions.forEach(t => {
+                transactionHtml += `<li class="p-3 bg-green-50 text-green-800 rounded-lg text-center font-medium">${t}</li>`;
+            });
+            transactionHtml += '</ul>';
+        } else {
+            transactionHtml += `<p class="p-3 bg-green-50 text-green-800 rounded-lg text-center font-medium">All settled up!</p>`;
+        }
+
+        summaryEl.innerHTML = balanceHtml + transactionHtml;
+    }
+
+    // Initial render
+    renderMembers();
+
+    // Add event listener for the 'Enter' key on the member input
+    memberNameInput.addEventListener('keydown', function(event) {
+        // Check if the key pressed was 'Enter'
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent any default form submission behavior
+            addMember(); // Call the existing addMember function
+        }
+    });
+</script>
+
+</body>
+</html>

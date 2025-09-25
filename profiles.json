@@ -1,0 +1,168 @@
+[
+    { 
+        "name": "Ananya", 
+        "interests": ["reading", "history", "art", "food"], 
+        "visited": [
+            { "place": "Raja Dinkar Kelkar Museum", "rating": 5, "review": "An amazing collection of historical artifacts. A must-visit for history buffs!", "lat": 18.5119, "lon": 73.8545 },
+            { "place": "Joshi's Museum of Miniature Railways", "rating": 4, "review": "Quirky and fun, a unique spot.", "lat": 18.4729, "lon": 73.8373 },
+            { "place": "Marz-O-Rin", "rating": 4, "review": "Classic sandwiches and chill vibes. Perfect for a quick, budget-friendly bite.", "lat": 18.5273, "lon": 73.8741 },
+            { "place": "Pagdandi Books Chai Cafe", "rating": 5, "review": "The best place to read a book and sip on amazing chai. So cozy.", "lat": 18.5522, "lon": 73.8093 }
+        ]
+    },
+    { 
+        "name": "Rohan", 
+        "interests": ["hiking", "adventure", "photography"], 
+        "visited": [
+            { "place": "Sinhagad Fort", "rating": 5, "review": "The hike was challenging but the views are breathtaking. Perfect for photos at sunrise.", "lat": 18.3662, "lon": 73.7558 },
+            { "place": "Vetal Hill", "rating": 4, "review": "Highest point in Pune, great for a morning walk and city views.", "lat": 18.5126, "lon": 73.8153 },
+            { "place": "Taljai Hill", "rating": 3, "review": "It's more of a park than a real hike. Good for a walk but not very adventurous.", "lat": 18.4770, "lon": 73.8475 }
+        ]
+    },
+    { 
+        "name": "Priya", 
+        "interests": ["food", "shopping", "relaxation"], 
+        "visited": [
+            { "place": "German Bakery", "rating": 5, "review": "Loved the vibe and the food is delicious. Their cakes are famous for a reason!", "lat": 18.5361, "lon": 73.8943 },
+            { "place": "Vaishali Restaurant", "rating": 5, "review": "The best SPDP in town. An absolute Pune classic, always worth the wait.", "lat": 18.5191, "lon": 73.8417 },
+            { "place": "Phoenix Marketcity", "rating": 4, "review": "Huge mall with all the brands you need. Great food court too.", "lat": 18.5623, "lon": 73.9167 },
+            { "place": "Shaniwar Wada", "rating": 2, "review": "Was expecting more, it's mostly just ruins. Not worth the entry fee.", "lat": 18.5195, "lon": 73.8553 }
+        ]
+    },
+     { 
+        "name": "Vikram", 
+        "interests": ["history", "photography", "reading"], 
+        "visited": [
+            { "place": "Aga Khan Palace", "rating": 5, "review": "A serene and historically significant place. The architecture is beautiful for photos.", "lat": 18.5522, "lon": 73.9039 },
+            { "place": "Pataleshwar Cave Temple", "rating": 4, "review": "Incredible rock-cut temple right in the city. A hidden gem.", "lat": 18.5255, "lon": 73.8475 }
+        ]
+    },
+    { 
+        "name": "Kabir", 
+        "interests": ["history", "food", "budget"], 
+        "visited": [
+            { "place": "Bedekar Tea Stall", "rating": 5, "review": "The best Misal Pav in Pune, period. It's spicy and absolutely delicious.", "lat": 18.5152, "lon": 73.8440 },
+            { "place": "Laxmi Road", "rating": 4, "review": "The heart of city shopping for traditional wear and household items. Very crowded but great for deals.", "lat": 18.5173, "lon": 73.8583 }
+        ]
+    },
+    { 
+        "name": "Aarav", 
+        "interests": ["adventure", "music", "food", "nightlife"], 
+        "visited": [
+            { "place": "High Spirits Cafe", "rating": 5, "review": "Best place for live music and a fun night out with friends.", "lat": 18.5445, "lon": 73.9058 },
+            { "place": "Goodluck Cafe", "rating": 4, "review": "An iconic Irani cafe. Their bun maska and chai are legendary. Very budget-friendly.", "lat": 18.5209, "lon": 73.8410 }
+        ]
+    },
+    { 
+        "name": "Rhea", 
+        "interests": ["art", "photography", "reading", "relaxation"], 
+        "visited": [
+            { "place": "Pune-Okayama Friendship Garden", "rating": 5, "review": "A beautiful and peaceful Japanese garden. Perfect for a quiet afternoon.", "lat": 18.4682, "lon": 73.8483 },
+            { "place": "Cafe Kathaa", "rating": 4, "review": "A lovely little cafe combined with a library. Great concept for book lovers.", "lat": 18.5200, "lon": 73.8412 }
+        ]
+    },
+    {
+        "name": "Siddharth",
+        "interests": ["food", "social", "nightlife"],
+        "visited": [
+            { "place": "The Urban Foundry", "rating": 5, "review": "Industrial decor and amazing fusion food. The cocktails are top-notch.", "lat": 18.5396, "lon": 73.9069 },
+            { "place": "FC Road Social", "rating": 4, "review": "Classic Social experience. Great for working during the day and partying at night.", "lat": 18.5218, "lon": 73.8394 },
+            { "place": "Kayani Bakery", "rating": 5, "review": "An absolute Pune institution. Their Shrewsbury biscuits are world-famous for a reason.", "lat": 18.5277, "lon": 73.8732 }
+        ]
+    },
+    {
+        "name": "Kiara",
+        "interests": ["shopping", "luxury", "food"],
+        "visited": [
+            { "place": "The Pavilion Mall", "rating": 4, "review": "Good collection of brands and a nice cinema. Can get crowded.", "lat": 18.5235, "lon": 73.8290 },
+            { "place": "Chitale Bandhu Mithaiwale", "rating": 5, "review": "You cannot leave Pune without trying their Bhakarwadi. Simply the best.", "lat": 18.5140, "lon": 73.8415 }
+        ]
+    },
+    {
+        "name": "Dev",
+        "interests": ["music", "art", "photography"],
+        "visited": [
+            { "place": "La La Land", "rating": 4, "review": "Great place for live gigs, especially electronic music. The sound system is fantastic.", "lat": 18.5361, "lon": 73.8943 },
+            { "place": "Gyaan Adab", "rating": 5, "review": "A wonderful, intimate space for poetry readings and art exhibitions.", "lat": 18.5412, "lon": 73.9102 }
+        ]
+    },
+    {
+        "name": "Ishan",
+        "interests": ["adventure", "hiking"],
+        "visited": [
+            { "place": "Rajgad Fort", "rating": 5, "review": "A challenging but incredibly rewarding trek. The history of this place is palpable.", "lat": 18.2439, "lon": 73.6822 },
+            { "place": "Panshet Dam", "rating": 4, "review": "Beautiful spot for a long drive, especially during the monsoon. Boating is available.", "lat": 18.3998, "lon": 73.6111 }
+        ]
+    },
+    {
+        "name": "Zara",
+        "interests": ["relaxation", "reading"],
+        "visited": [
+            { "place": "Osho Garden", "rating": 5, "review": "Incredibly serene and beautiful. A perfect place to meditate or just sit and read.", "lat": 18.5369, "lon": 73.8924 },
+            { "place": "Empress Botanical Garden", "rating": 3, "review": "A large garden, but not very well maintained. Good for a walk but could be better.", "lat": 18.5165, "lon": 73.8827 }
+        ]
+    },
+    {
+        "name": "Arnav",
+        "interests": ["history", "photography"],
+        "visited": [
+            { "place": "National War Museum", "rating": 4, "review": "A very well-maintained museum dedicated to our armed forces. Very informative.", "lat": 18.5085, "lon": 73.8804 },
+            { "place": "Vishrambaug Wada", "rating": 3, "review": "A beautiful historical structure, but it's not well preserved and is mostly occupied by offices.", "lat": 18.5161, "lon": 73.8588 }
+        ]
+    },
+    {
+        "name": "Myra",
+        "interests": ["shopping", "food"],
+        "visited": [
+            { "place": "Tulshibaug", "rating": 4, "review": "The ultimate street shopping destination in Pune. You need to bargain hard!", "lat": 18.5167, "lon": 73.8557 },
+            { "place": "Maratha Samrat", "rating": 5, "review": "Authentic and delicious Maharashtrian thali. The food is outstanding.", "lat": 18.5293, "lon": 73.8436 }
+        ]
+    },
+    {
+        "name": "Vivaan",
+        "interests": ["adventure", "photography"],
+        "visited": [
+            { "place": "Khadakwasla Dam", "rating": 4, "review": "A popular hangout spot for locals. Great for enjoying corn on the cob by the water.", "lat": 18.4550, "lon": 73.7845 },
+            { "place": "Pu La Deshpande Garden", "rating": 5, "review": "Another name for the Pune-Okayama Friendship Garden. It's stunning for photography.", "lat": 18.4682, "lon": 73.8483 }
+        ]
+    },
+    {
+        "name": "Aditi",
+        "interests": ["art", "relaxation"],
+        "visited": [
+            { "place": "Darshan Museum", "rating": 5, "review": "A unique 3D holographic museum. A very different and moving experience.", "lat": 18.5312, "lon": 73.8835 },
+            { "place": "Koregaon Park", "rating": 4, "review": "Lush green lanes, perfect for a peaceful walk. Lots of nice cafes and boutiques.", "lat": 18.5360, "lon": 73.8880 }
+        ]
+    },
+    {
+        "name": "Kabir",
+        "interests": ["food", "history"],
+        "visited": [
+            { "place": "Shinde Chhatri", "rating": 4, "review": "A beautiful memorial with stunning architecture. A quiet and underrated historical spot.", "lat": 18.5034, "lon": 73.8837 },
+            { "place": "George Restaurant", "rating": 4, "review": "Another Pune institution. Famous for its biryani and non-veg dishes.", "lat": 18.5255, "lon": 73.8776 }
+        ]
+    },
+    {
+        "name": "Nisha",
+        "interests": ["reading", "food"],
+        "visited": [
+            { "place": "Appa Balwant Chowk", "rating": 5, "review": "The go-to place for any student. You can find almost any academic book here.", "lat": 18.5173, "lon": 73.8540 },
+            { "place": "Cafe Goodluck", "rating": 5, "review": "A must-visit for its old-school charm and delicious food. The kheema is amazing.", "lat": 18.5209, "lon": 73.8410 }
+        ]
+    },
+    {
+        "name": "Aryan",
+        "interests": ["adventure", "photography"],
+        "visited": [
+            { "place": "Pashan Lake", "rating": 3, "review": "Nice for bird watching, but the lake itself is not very clean. Good for a quick photo stop.", "lat": 18.5383, "lon": 73.7915 },
+            { "place": "Diamond Water Park", "rating": 4, "review": "A fun water park, great for a day trip with friends or family.", "lat": 18.6014, "lon": 73.9610 }
+        ]
+    },
+    {
+        "name": "Saanvi",
+        "interests": ["shopping", "luxury"],
+        "visited": [
+            { "place": "JW Marriott Hotel", "rating": 5, "review": "The Sunday brunch here is an experience in luxury. Impeccable service and food.", "lat": 18.5323, "lon": 73.8242 },
+            { "place": "Westend Mall", "rating": 4, "review": "A good mall with a nice selection of stores and a cinema.", "lat": 18.5494, "lon": 73.8066 }
+        ]
+    }
+]

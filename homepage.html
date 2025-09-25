@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelMitra - Your Travel Companion</title>
+    <style>
+        /* --- Basic Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Body Styling with Background Image --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            position: relative; /* Required for the overlay */
+        }
+
+        /* This pseudo-element creates the background image and a dark overlay */
+        body::before {
+            content: '';
+            position: fixed; /* Covers the entire viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Puts it behind all other content */
+
+            /* Correct path to your image */
+           background-image: url('images/home7.png');
+            background-size: cover;
+            background-position: center;
+            
+            /* This adds a dark layer on top of the image to make text readable */
+            background-color: rgb(255, 255, 255); 
+            background-blend-mode: multiply;
+        }
+
+
+        /* --- Header Styling --- */
+        .main-header {
+            text-align: center;
+            padding: 50px 20px;
+            /* The background is now transparent to show the body's background image */
+            color: #ffffff;
+        }
+
+        .main-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); /* Adds shadow to make text pop */
+        }
+
+        .main-header p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        /* --- Feature Grid Container --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns on large screens */
+            gap: 25px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto; /* Center the grid */
+        }
+
+        /* --- Individual Tile Styling --- */
+        .feature-tile {
+            background-color: #ffffff;
+            border-radius: 10px;
+            
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- Hover Effect for Tiles --- */
+        .feature-tile:hover {
+            transform: translateY(-8px);
+            
+        }
+
+        .tile-icon {
+            font-size: 3rem; /* Icon size */
+            margin-bottom: 15px;
+            color: #ff7300;
+        }
+
+        .feature-tile h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .feature-tile p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* --- Responsive Design --- */
+        /* For Tablets */
+        @media (max-width: 992px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            }
+            .main-header h1 {
+                font-size: 3rem;
+            }
+        }
+
+        /* For Mobile Phones */
+        @media (max-width: 600px) {
+            .feature-grid {
+                grid-template-columns: 1fr; /* 1 column */
+                padding: 20px;
+            }
+            .main-header {
+                padding: 40px 15px;
+            }
+            .main-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+        /* Title box styling */
+.title-box {
+    display: inline-block;              /* shrink box to fit content */
+    background: rgba(41, 131, 186, 0.6);     /* semi-transparent dark background */
+    padding: 20px 40px;                 /* space around text */
+    border-radius: 12px;                /* rounded corners */
+    
+    width : 75%
+}
+
+.title-box h1 {
+   font-family: 'Courier New', monospace;
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 0px;
+    color: #ffffff; /* make text white */
+}
+
+.title-box p {
+    font-size: 1.6rem;
+    color: #ffffff;
+}
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+    <div class="title-box">
+        <h1>TRAVEL-MITRA</h1>
+        <p>We do the Job of Planning , so you can Focus on the Experience and Emotions of the Travel</p>
+    </div>
+    </header>
+
+
+    <main>
+        <div class="feature-grid">
+
+            
+            <div class="feature-tile" onclick="openFeature('Plan a Trip')">
+                <div class="tile-icon"><img src= "images/mapicon.png"></div>
+                 <a href="personalmap.html"style="text-decoration: none; color: inherit;"><h2>PERSONAL MAP</h2></a>
+                
+                <p>Understand the Traffic, Best Route and Weather Info.</p>
+            </div>
+
+           
+            <div class="feature-tile" onclick="openFeature('Book Flights')">
+                <div class="tile-icon"><img src = "images/family.jpg"></div>
+                <a href="familytravel.html"style="text-decoration: none; color: inherit;"><h2>FAMILY TRIP </h2></a>
+                
+                <p>Get a Personalized Trip Plan designed just for Your Family.</p>
+            </div>
+
+            <div class="feature-tile" onclick="openFeature('Hotel Finder')">
+                <div class="tile-icon"><img src="images/stuck.png"></div>
+                <a href="routerescue.html"style="text-decoration: none; color: inherit;"><h2>ROUTE RESCUE
+                </h2></a>
+                
+                <p>Get Instant Places recommendation for Times when you get Stuck.</p>
+            </div>
+
+            <div class="feature-tile" onclick="openFeature('Destination Guides')">
+                <div class="tile-icon"><img src = "images/dna matching.png"></div>
+                 <a href="tna.html"style="text-decoration: none; color: inherit;"> <h2>TNA MATCHING</h2></a>
+               
+                <p>Travel DNA: Get recommendation based on common Travel preferences.</p>
+            </div>
+
+           
+            <div class="feature-tile" onclick="openFeature('Travel Budget')">
+                <div class="tile-icon"><img src="images/split.png"></div>
+                <a href="split.html"style="text-decoration: none; color: inherit;"> <h2>SPLITWISE</h2></a>
+               
+                <p>Easily Manage and Split your Expenses amoung Tripmates.</p>
+            </div>
+
+            <div class="feature-tile" onclick="openFeature('Local Experiences')">
+                <div class="tile-icon"><img src= "images/track.png"></div>
+                <a href="tracking.html"style="text-decoration: none; color: inherit;"> <h2>TRACKING</h2></a>
+                
+                <p>Get Information about your Train and Flight Schedule.</p>
+            </div>
+
+        </div>
+    </main>
+
+  
+
+</body>
+</html>
